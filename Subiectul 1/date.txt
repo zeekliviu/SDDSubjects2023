@@ -1,0 +1,57 @@
+10
+500 3
+Diazepam 100g
+Paracetamol 500mg
+Nurofen Raceala si Gripa
+2 1 3 10.32 5.21 6.15 5 10 10
+Dr. Alexandru Firicel
+600 2
+Paracetamol 500mg
+Loratadine 10mg
+2 1 10.20 5.00 10 15
+Dr. Maria Floarea
+700 2
+Ibuprofen 400mg
+Diazepam 100g
+2 1 15.40 10.32 10 5
+Dr. Alexandru Firicel
+800 4
+Paracetamol 500mg
+Ibuprofen 400mg
+Amoxicillin 250mg
+Losartan 50mg
+2 1 2 3 20.99 15.40 25.50 30.00 20 10 50 15
+Dr. Maria Floarea
+900 1
+Loratadine 10mg
+1 5.00 15
+Dr. Ioan Aldea
+1000 3
+Atorvastatin 40mg
+Metformin 500mg
+Lisinopril 20mg
+1 2 3 15.00 10.50 20.00 25 15 15
+Dr. Elena Sava
+1100 2
+Amoxicillin 250mg
+Loratadine 10mg
+2 1 25.50 5.00 50 15
+Dr. Ioan Aldea
+1200 3
+Losartan 50mg
+Diazepam 100g
+Atorvastatin 40mg
+2 1 3 30.00 10.32 15.00 15 5 25
+Dr. Elena Sava
+1300 4
+Paracetamol 500mg
+Ibuprofen 400mg
+Amoxicillin 250mg
+Losartan 50mg
+2 1 2 3 20.99 15.40 25.50 30.00 20 10 50 15
+Dr. Alexandru Firicel
+1400 2
+Ibuprofen 400mg
+Diazepam 100g
+2 1 15.40 10.32 10 5
+Dr. Maria Floarea
