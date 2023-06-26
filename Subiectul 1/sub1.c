@@ -277,9 +277,7 @@ void dezalocareLista(nodLS** cap)
 		}
 		free(aux->info->listaMedicamente);
 		free(aux->info);
-		aux->info = NULL;
-		aux->prev = NULL;
-		free(aux);                                                                                                                           
+		free(aux);          
 	}
 }
 

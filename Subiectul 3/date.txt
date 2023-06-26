@@ -1,0 +1,71 @@
+10
+1000
+Hotel Transilvania
+200
+3
+Ion Popescu
+01-07-2023 - 07-07-2023
+50.0
+2000
+Hotel Carpati
+150
+2
+Maria Ionescu
+10-07-2023 - 15-07-2023
+60.0
+3000
+Hotel Dacia
+180
+1
+Vasile Vasilescu
+20-07-2023 - 25-07-2023
+45.0
+4000
+Hotel Transilvania
+200
+4
+Ioana Mihai
+01-08-2023 - 10-08-2023
+50.0
+5000
+Hotel Carpati
+150
+1
+Ana Popescu
+10-08-2023 - 15-08-2023
+60.0
+6000
+Hotel Dacia
+180
+2
+Petru Petrescu
+20-08-2023 - 25-08-2023
+45.0
+7000
+Hotel Transilvania
+200
+5
+Mirela Marinescu
+01-09-2023 - 10-09-2023
+50.0
+8000
+Hotel Carpati
+150
+2
+Andrei Andreescu
+10-09-2023 - 15-09-2023
+60.0
+9000
+Hotel Dacia
+180
+3
+Cristina Cristescu
+20-09-2023 - 25-09-2023
+45.0
+10000
+Hotel Transilvania
+200
+4
+Ion Popescu
+01-10-2023 - 10-10-2023
+50.0

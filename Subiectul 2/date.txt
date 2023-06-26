@@ -1,0 +1,68 @@
+10
+1000 3091 3
+Hematocrit
+Glicemie
+Colesterol total
+38.5 95.0 190.0
+50.0 100.0 200.0
+25-06-2023
+2981 1720 2
+Trigliceride
+TSH
+180.0 2.8
+150.0 5.0
+26-06-2023
+4520 7864 4
+Hematocrit
+Creatinina serica
+Sodiu seric
+Potasiu seric
+45.0 0.9 145.0 4.5
+50.0 1.2 145.0 5.0
+25-06-2023
+3780 4325 3
+VSH
+Proteina C reactiva
+Leucocite
+12 1.0 6700
+20 1.0 10000
+28-06-2023
+5931 6691 2
+Alanine aminotransferase (ALT)
+Aspartate aminotransferase (AST)
+30.0 32.0
+40.0 40.0
+29-06-2023
+7890 1782 3
+Calcium seric
+Fosfor seric
+Magnesium seric
+9.5 3.5 2.0
+10.5 4.5 2.5
+25-06-2023
+6504 8921 2
+Bilirubina totala
+Bilirubina directa
+0.9 0.2
+1.0 0.3
+01-07-2023
+8123 2738 3
+Albumina serica
+Globuline serice
+Raport A/G
+4.5 2.5 1.8
+5.0 3.5 2.5
+02-07-2023
+9432 3091 2
+Hematocrit
+Tempo de protrombina (TP)
+300.0 11.5
+400.0 13.0
+28-06-2023
+1130 1876 3
+INR (Ratio international normalizat)
+Timp de tromboplastina partial activat (aPTT)
+Colesterol total
+1.0 30.0 250000
+1.0 40.0 200.0
+04-07-2023

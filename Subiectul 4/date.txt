@@ -1,0 +1,71 @@
+10
+Ion Popescu
+10000.00
+RON
+0
+1.2
+2000
+Banca Comerciala Romana
+Maria Ionescu
+5000.00
+EUR
+1
+2.0
+1000
+ING Bank
+Ion Popescu
+12000.00
+RON
+0
+1.5
+2500
+Raiffeisen Bank
+Ana Popescu
+3000.00
+GBP
+1
+2.2
+1500
+Banca Romaneasca
+Ion Popescu
+15000.00
+EUR
+0
+1.3
+3000
+Banca Comerciala Romana
+Maria Ionescu
+7000.00
+RON
+1
+1.5
+2000
+ING Bank
+Andrei Andreescu
+8000.00
+EUR
+0
+2.0
+2500
+Raiffeisen Bank
+Ana Popescu
+9000.00
+USD
+1
+1.8
+3000
+Banca Romaneasca
+Radu Radulescu
+6000.00
+GBP
+0
+2.1
+1500
+Banca Comerciala Romana
+Mirela Marinescu
+11000.00
+CHF
+1
+1.4
+2000
+ING Bank
