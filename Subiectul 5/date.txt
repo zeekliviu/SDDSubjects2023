@@ -1,0 +1,61 @@
+10
+10
+34
+3000.00
+Ion Popescu
+40
+1
+20
+201
+3200.00
+Maria Ionescu
+38
+0
+10
+115
+2800.00
+Adrian Mocanu
+42
+1
+30
+88
+2900.00
+Diana Matei
+37
+0
+10
+254
+2800.00
+Victor Petrescu
+40
+1
+20
+167
+2800.00
+Simona Andreescu
+38
+0
+30
+99
+2800.00
+Gabriel Toma
+42
+1
+10
+143
+2900.00
+Mirela Marinescu
+37
+0
+20
+220
+3100.00
+Lucian Iorga
+40
+1
+30
+77
+3200.00
+Mihaela Neagu
+38
+0
