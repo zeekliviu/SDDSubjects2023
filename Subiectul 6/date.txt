@@ -1,0 +1,71 @@
+10
+30
+1542
+10005
+Ion Popescu
+50.0
+Strada Florilor, Nr. 5, Bucuresti
+In procesare
+20
+8752
+10008
+Maria Ionescu
+75.0
+Aleea Castanilor, Nr. 7, Cluj-Napoca
+Livrata
+40
+9832
+10003
+Andrei Andreescu
+60.0
+Bulevardul Unirii, Nr. 12, Timisoara
+In procesare
+30
+4421
+10010
+Diana Matei
+80.0
+Strada Libertatii, Nr. 3, Brasov
+Livrata
+45
+8752
+10001
+Maria Ionescu
+55.0
+Aleea Rozelor, Nr. 9, Constanta
+In procesare
+35
+6591
+10007
+Simona Andreescu
+65.0
+Bulevardul Revolutiei, Nr. 17, Iasi
+Livrata
+40
+8524
+10002
+Gabriel Toma
+70.0
+Strada Pacii, Nr. 21, Craiova
+In procesare
+50
+1423
+10004
+Mirela Marinescu
+85.0
+Aleea Teilor, Nr. 25, Galati
+Livrata
+30
+8524
+10006
+Gabriel Toma
+75.0
+Bulevardul Victoriei, Nr. 29, Oradea
+In procesare
+45
+1542
+10009
+Ion Popescu
+90.0
+Strada Sperantei, Nr. 33, Ploiesti
+Livrata

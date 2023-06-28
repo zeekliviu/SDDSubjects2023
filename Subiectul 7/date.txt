@@ -1,0 +1,61 @@
+10
+5
+55.0
+Ion Popescu
+01.07.2023
+Sala Palatului, Bucuresti
+120
+2
+75.0
+Maria Ionescu
+05.07.2023
+Opera Romana, Cluj-Napoca
+90
+10
+60.0
+Andrei Andreescu
+10.07.2023
+Teatrul National, Timisoara
+110
+4
+80.0
+Diana Matei
+15.07.2023
+Casa de Cultura, Brasov
+100
+1
+55.0
+Victor Petrescu
+01.07.2023
+Sala Sporturilor, Constanta
+130
+8
+65.0
+Andrei Andreescu
+25.07.2023
+Teatrul de vara, Iasi
+95
+3
+70.0
+Gabriel Toma
+30.07.2023
+Casa de Cultura, Craiova
+105
+6
+85.0
+Andrei Andreescu
+04.08.2023
+Teatrul de vara, Galati
+120
+7
+75.0
+Lucian Iorga
+01.07.2023
+Teatrul National, Oradea
+110
+9
+90.0
+Mihaela Neagu
+14.08.2023
+Sala Palatului, Ploiesti
+100
