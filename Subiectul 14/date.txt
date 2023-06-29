@@ -1,0 +1,56 @@
+11
+12/09/2023
+Dr. Ion Popescu
+Medicina Generala
+Tensiune arteriala marita
+200
+15/09/2023
+Prof. dr. Maria Pop
+Pediatrie
+Bronzita acuta in faza progresiva
+150
+18/09/2023
+Dr. Ana Mihai
+Ortopedie
+Fractura de col femural cu complicatii
+500
+21/09/2023
+Dr. Ionut Radu
+Pediatrie
+Hipertensiune arteriala stadiul II
+300
+24/09/2023
+Prof. dr. Elena Georgescu
+Medicina Generala
+Tensiune arteriala marita
+250
+27/09/2023
+Dr. George Stoian
+Pediatrie
+Eczema atopica
+150
+30/09/2023
+Prof. dr. Laura Marin
+Ortopedie
+Glaucom cu unghi inchis
+400
+03/10/2023
+Dr. Adrian Popescu
+Pediatrie
+Ulcer gastric perforat
+350
+06/10/2023
+Dr. Ioana Munteanu
+Medicina Generala
+Tensiune arteriala marita
+300
+09/10/2023
+Prof. dr. Florin Ionescu
+Ortopedie
+Sindrom de intestin iritabil
+250
+09/10/2023
+Prof. dr. Alexandru Firicel
+Ortopedie si Traumatologie
+Tensiune arteriala marita
+250

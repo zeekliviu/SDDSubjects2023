@@ -1,0 +1,41 @@
+10
+12345
+Eiffel Tower, Paris
+12 8 2023
+200.0
+45678
+Big Ben, London
+20 9 2023
+150.0
+78901
+Eiffel Tower, Paris
+28 10 2023
+180.0
+10112
+Plaza Mayor, Madrid
+15 11 2023
+210.0
+13141
+Brandenburg Gate, Berlin
+20 12 2023
+200.0
+15161
+Statue of Liberty, New York
+5 1 2024
+270.0
+17181
+Plaza Mayor, Madrid
+14 2 2024
+200.0
+19191
+Golden Gate Bridge, San Francisco
+25 3 2024
+330.0
+21211
+Times Square, New York
+4 4 2024
+360.0
+23231
+Louvre Museum, Paris
+13 5 2024
+390.0

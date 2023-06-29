@@ -1,0 +1,76 @@
+15
+1
+Alexandru Mihai
+2600.00
+Marketing
+1
+2
+Maria Popescu
+3000.00
+Sales
+0
+3
+George Ionescu
+2500.00
+Human Resources
+1
+4
+Ioana Vasilescu
+3200.00
+IT
+0
+5
+Bogdan Marinescu
+2100.00
+Accounting
+1
+6
+Andrei Pop
+2300.00
+Legal
+1
+7
+Ana Ionescu
+2200.00
+Management
+0
+8
+Stefan Georgescu
+2800.00
+Production
+1
+9
+Cristina Vasile
+3500.00
+Design
+0
+10
+Radu Moldoveanu
+3000.00
+Research
+1
+11
+Elena Dumitrescu
+3300.00
+Sales
+0
+12
+Mihai Bratu
+2200.00
+Marketing
+1
+13
+Ioana Petrescu
+2600.00
+IT
+0
+14
+Dan Stanescu
+2400.00
+Human Resources
+1
+15
+Adela Iorga
+2900.00
+Management
+0

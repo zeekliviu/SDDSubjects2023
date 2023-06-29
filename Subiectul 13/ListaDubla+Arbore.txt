@@ -1,0 +1,8 @@
+Implementaţi o aplicaţie în limbajul C ce rezolvă probleme de gestionare a angajaților unei instituții.
+1. Scrieţi secvenţa de cod sursă pentru crearea unei structuri de tip Listă Dublu Înlănțuită ce conţine date aferente unor angajați. Inserarea unui angajat se implementează printr-o funcţie care se apelează în secvenţa de adăugare noduri în structura Listă Dublu Înlănțuită.
+Structura Angajat se va defini astfel încât să conţină minim 5 câmpuri, din care minim două sunt declarate ca pointeri.
+Lista dublu înlănțuită va conţine datele a cel puţin 10 angajați care se preiau ca input dintr-un fişier text. (2p)
+2. Scrieţi şi apelaţi funcţia pentru stergerea tuturor nodurilor din lista dubla identificate pe baza unui criteriu din structura Angajat. Pentru verificare, lista dublă este afișată înainte și după stergere, prin traversare în ambele sensuri. (2p)
+3. Scrieţi secvenţa de cod care copiază o parte dintre angajații din Lista Dublu Înlănțuită creată anterior într-o structură Arbore Binar de Căutare. Filtrarea angajaților copiați se realizează pe baza unui câmp definit în structura Angajat. Cele două structuri de date NU partajează zone de memorie heap. (3p)
+4. Scrieţi şi apelaţi funcţia pentru salvarea intr-un vector a nodurilor din Arbore Binar de Căutare plasate de la radacina pana la un anumit nod identificat pe baza cheii de cautare a arborelui din structura Angajat. (2p)
+5. Scrieţi secvenţa de cod care dezalocă structura Listă Dublu Înlănțuită, Arborele Binar de Căutare şi a structurii Vector create la punctele anterioare. (1p)

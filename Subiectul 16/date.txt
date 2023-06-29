@@ -1,0 +1,41 @@
+8
+1232
+Dezvoltarea inteligentei artificiale
+Universitatea Politehnica Timisoara
+24
+50000.00
+2901
+Studiu asupra efectului poluarii asupra florei
+Institutul de Ecologie Cluj
+36
+80000.00
+3467
+Cercetari in domeniul energiilor regenerabile
+Universitatea Politehnica Timisoara
+48
+120000.00
+4321
+Dezvoltarea de noi metode de invatare online
+Universitatea Babes-Bolyai Cluj
+12
+30000.00
+1678
+Studii privind utilizarea tehnologiilor VR in educatie
+Universitatea Babes-Bolyai Cluj
+18
+40000.00
+2849
+Optimizarea traficului urban prin inteligenta artificiala
+Universitatea Politehnica Timisoara
+24
+60000.00
+2093
+Dezvoltarea de tehnici avansate de procesare a imaginilor
+Institutul de Informatica Bucuresti
+36
+75000.00
+2850
+Dezvoltarea de tehnici avansate de procesare a imaginilor computerizate
+Institutul de Informatica Constanta
+36
+64000.00
