@@ -1,0 +1,22 @@
+7
+4583 2 350.00
+Hotel Transilvania
+John Smith
+6925 4 800.00
+Hotel Sunshine
+Michael Davis
+3471 2 400.00
+Hotel Paris
+Emily Jones
+2810 1 220.00
+Hotel Mountain View
+David Wilson
+1582 3 590.00
+Hotel International
+John Smith
+8452 5 1050.00
+Hotel Ocean Breeze
+Olivia Taylor
+2931 2 360.00
+Hotel Downtown
+Michael Davis

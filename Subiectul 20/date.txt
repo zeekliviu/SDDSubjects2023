@@ -1,0 +1,31 @@
+10
+Lumea Copiilor
+Bucuresti
+50 35 0
+Paradisul Piticilor
+Brasov
+70 60 1
+Casuta Vesela
+Oradea
+60 50 1
+Micul Print
+Cluj-Napoca
+80 75 0
+Gradinita Soarelui
+Constanta
+65 60 1
+Arlechino
+Pitesti
+55 50 0
+Florile Copilariei
+Bucuresti
+75 70 1
+Rainbow Kids
+Brasov
+50 45 0
+Pas cu Pas
+Timisoara
+70 65 1
+Happy Kids
+Oradea
+60 55 0

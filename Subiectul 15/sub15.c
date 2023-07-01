@@ -5,11 +5,12 @@
 #include <stdbool.h>
 #pragma warning(disable:4996)
 #define LINE_SIZE 128
-//#define _CRTDBG_MAP_ALLOC
+#define _CRTDBG_MAP_ALLOC
 
 typedef struct InfoLocalitate Localitate;
 typedef struct ListaDubla nodLS;
 typedef struct Vector Vector;
+typedef enum TipLocalitate Tip;
 
 enum TipLocalitate
 {
@@ -24,7 +25,7 @@ struct InfoLocalitate
 	char* denumire;
 	char* judet;
 	unsigned int populatie;
-	enum TipLocalitate tip;
+	Tip tip;
 	float buget;
 };
 
@@ -109,7 +110,7 @@ void citireFisier(nodLS** cap, nodLS** coada, const unsigned char* numeFisier)
 	}
 }
 
-unsigned int populatieTotalaDin(enum TipLocatie tip, nodLS* cap, bool* flag)
+unsigned int populatieTotalaDin(Tip tip, nodLS* cap, bool* flag)
 {
 	unsigned int total = 0;
 	*flag = false;
@@ -286,7 +287,7 @@ void main()
 	const unsigned char* numeFisier = "date.txt";
 	const char* judet = "Cluj";
 	const float procent = 3.14f;
-	const enum TipLocatie tip = municipiu;
+	const Tip tip = municipiu;
 	citireFisier(&cap, &coada, numeFisier);
 	traversareListaDublaDeLaCap(cap);
 	unsigned int totalPopulatie = populatieTotalaDin(tip, cap, &flag);

@@ -1,0 +1,31 @@
+10
+7549 4 1200000.00
+Renewable Energy Development
+John Doe Ltd.
+6821 8 2300000.00
+Smart City Infrastructure
+Alpha Tech Inc.
+3920 5 800000.00
+Environmental Impact Assessment
+John Doe Ltd.
+2164 7 1700000.00
+AI in Healthcare
+Beta Solutions Ltd.
+4748 6 1500000.00
+Automation in Agriculture
+John Doe Ltd.
+3851 10 3000000.00
+Cybersecurity Solutions
+Secure Tech Corp.
+9163 3 500000.00
+Smart Home Solutions
+Epsilon Electronics Ltd.
+4827 7 1400000.00
+Water Conservation Project
+Beta Solutions Ltd.
+5903 6 1100000.00
+Recycling and Waste Management
+Eco Warriors Group.
+2630 8 2600000.00
+Blockchain in Finance
+Delta Finance Corp.

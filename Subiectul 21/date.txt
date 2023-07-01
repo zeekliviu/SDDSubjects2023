@@ -1,0 +1,41 @@
+10
+Ion Popescu
+Informatica
+8.52
+123456
+Ana Ionescu
+Matematica
+9.25
+654321
+Ion Popescu
+Biologie
+8.75
+789012
+Ana Ionescu
+Chimie
+8.12
+210987
+Vasile Dumitrescu
+Informatica
+9.65
+345678
+Maria Popa
+Istorie
+8.12
+876543
+Ion Popescu
+Matematica
+8.32
+123789
+Iulia Gheorghe
+Biologie
+9.10
+654987
+Doru Iliescu
+Chimie
+8.12
+789654
+Ana Ionescu
+Informatica
+9.32
+987321

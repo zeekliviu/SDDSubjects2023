@@ -1,0 +1,8 @@
+Implementaţi o aplicaţie în limbajul C ce rezolvă probleme de gestionare a grădiniţelor pentru copii.
+1. Scrieţi secvenţa de cod sursă pentru crearea unei structuri de tip Tabelă de Dispersie ce conţine date aferente unor grădiniţe. Cheia de căutare este alfanumerică, iar mecanismul de tratare a coliziunilor este Chaining. Inserarea unei grădiniţe se implementează într-o funcţie care se apelează în secvenţa de creare a structurii Tabelă de Dispersie.
+Structurile Gradinita se va defini astfel încât să conţină minim 5 câmpuri, din care minim două sunt declarate ca pointeri.
+Tabela de dispersie va conţine datele a cel puţin 10 gradiniţe care se preiau ca input dintr-un fişier text. (2p)
+2. Scrieţi şi apelaţi funcţia pentru modificarea cheii de căutare pentru o grădiniţă stocată în tabela de dispersie. (2p)
+3. Scrieţi secvenţa de cod care copiază o parte din grădiniţe din Tabela de Dispersie creată anterior într-o structură Lista Dublă. Filtrarea grădiniţelor copiate se realizează pe baza unui câmp definit în structura Gradinita. Cele două structuri de date NU partajează zone de memorie heap. (3p)
+4. Scrieţi şi apelaţi funcţia pentru operaţia de ”rupere”/”spargere” a listei duble în două subliste. Nodul la care se efectuează „ruperea” este identificat pe baza unui câmp definit în structura Gradinita. (2p)
+5. Scrieţi secvenţa de cod care dezalocă structura Tabelă de Dispersie şi cele două structuri Listă Dublă create la punctele anterioare. (1p)
