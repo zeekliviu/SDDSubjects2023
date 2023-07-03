@@ -1,0 +1,41 @@
+10
+12345 175.32
+Ion Popescu
+Dr. Alin Vasilescu
+15/07/2023
+54321 245.10
+Maria Ionescu
+Dr. Alin Vasilescu
+15/07/2023
+78901 90.30
+Andrei Mihai
+Dr. Florin Popescu
+15/07/2023
+10987 180.50
+Gabriela Radu
+Dr. Elena Marinescu
+15/07/2023
+65432 105.70
+Ion Popescu
+Dr. Elena Marinescu
+15/07/2023
+21098 305.20
+Maria Ionescu
+Dr. Florin Popescu
+24/07/2023
+76543 110.60
+Andrei Mihai
+Dr. Alin Vasilescu
+26/07/2023
+32109 95.40
+Gabriela Radu
+Dr. Florin Popescu
+28/07/2023
+87654 150.30
+Ion Popescu
+Dr. Elena Marinescu
+30/07/2023
+98765 205.10
+Maria Ionescu
+Dr. Alin Vasilescu
+15/07/2023
