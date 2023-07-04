@@ -1,0 +1,71 @@
+10
+1
+Implementare functie sortare
+Implementarea unei functii de sortare pentru o lista de numere intregi.
+Marian
+03 02 2023
+08 02 2023
+10
+2
+Testare functie sortare
+Testarea functiei de sortare implementate anterior.
+Ana
+09 02 2023
+14 02 2023
+20.0
+3
+Creare interfata grafica
+Dezvoltarea unei interfete grafice pentru aplicatie.
+Cristian
+10 02 2023
+17 03 2023
+30.0
+4
+Integrare functie sortare cu interfata
+Integrarea functiei de sortare cu interfata grafica a aplicatiei.
+Mihai
+18 03 2023
+22 03 2023
+40.0
+5
+Implementare functie filtrare
+Implementarea unei functii de filtrare pentru o lista de numere intregi.
+Cristina
+23 03 2023
+28 03 2023
+50.0
+6
+Testare functie filtrare
+Testarea functiei de filtrare implementate anterior.
+Marian
+29 03 2023
+03 04 2023
+25.0
+7
+Integrare functie filtrare cu interfata
+Integrarea functiei de filtrare cu interfata grafica a aplicatiei.
+Cristian
+04 04 2023
+08 04 2023
+35.0
+8
+Implementare functie de cautare
+Implementarea unei functii de cautare pentru o lista de numere intregi.
+Ana
+09 04 2023
+13 04 2023
+15.0
+9
+Testare functie cautare
+Testarea functiei de cautare implementate anterior.
+Mihai
+14 04 2023
+18 04 2023
+45.0
+10
+Integrare functie cautare cu interfata
+Integrarea functiei de cautare cu interfata grafica a aplicatiei.
+Cristina
+19 04 2023
+23 04 2023
+5.0

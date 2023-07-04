@@ -1,0 +1,7 @@
+Implementaţi o aplicaţie în limbajul C care implementează soluţii la probleme de localizare geografică.
+1. Scrieţi secvenţa de cod sursă pentru crearea unei structuri de tip Graf implementată prin Listă de Adiacenţă. Inserarea unei muchii în graf se implementează în funcţia principală pentru un număr de minim 6 localităţi citite dintr-un fişier de intrare. (3p)
+Structura Localitate se va defini astfel încât să conţină minim 5 câmpuri din care minim două câmpuri sunt definite ca variabile pointer.
+2. Scrieţi şi apelaţi funcţia pentru determinarea localităţilor din Graf cu număr maxim de conexiuni cu alte localităţi. Funcţia returnează un vector care conţine denumirea localităţilor cu maximul de conexiuni. (2p)
+3. Scrieţi secvenţa de cod care copiază datele localităţilor din structura Graf creată la punctul 1) într-o structură Arbore Binar de Căutare. Sunt considerate localităţile a căror denumire încep cu o literă specificată. Cele două structuri de date NU partajează zone de memorie heap. (2p)
+4. Scrieţi şi apelaţi funcţia pentru extragerea într-un vector a localităţilor plasate în nodurile frunză în Arborele Binar de Căutare creat la punctul 3). Nodurile frunză sunt şterse din structura arborescentă. (2p)
+5. Scrieţi secvenţa de cod care dezalocă structurile Listă de Adiacenţă, Vectori, Arbore Binar de Căutare şi toate structurile auxiliare utilizate în implementarea cerinţelor (dacă este necesar). (1p)
