@@ -60,8 +60,6 @@ nodLS* cautaInListaListe(nodLP* cap, const unsigned char* specialitate)
 	return NULL;
 }
 
-
-
 nodLS* creareNodListaSimpla(Consultatie c)
 {
 	nodLS* nou = (nodLS*)malloc(sizeof(nodLS));
@@ -239,22 +237,6 @@ void stergeConsultatiiCuDiagnostic(nodLP* cap, const char* diagnostic)
 	}
 }
 
-void nrElemVector(nodLP* cap, const int prag, unsigned char* nrElem)
-{
-	nodLP* temp = cap;
-	while (temp)
-	{
-		nodLS* aux = temp->info;
-		while (aux)
-		{
-			if (aux->c.pret > prag)
-				(*nrElem)++;
-			aux = aux->next;
-		}
-		temp = temp->next;
-	}
-}
-
 Consultatie DeepCopy(Consultatie c)
 {
 	Consultatie copie = c;
@@ -265,7 +247,7 @@ Consultatie DeepCopy(Consultatie c)
 	return copie;
 }
 
-void populareVector(nodLP* cap, Vector v, const int prag, unsigned char* auxInt)
+void populareVector(nodLP* cap, Vector* v, const int prag)
 {
 	nodLP* temp = cap;
 	while (temp)
@@ -273,21 +255,14 @@ void populareVector(nodLP* cap, Vector v, const int prag, unsigned char* auxInt)
 		nodLS* aux = temp->info;
 		while (aux)
 		{
-			if (aux->c.pret > prag)
-				v.vect[v.nrElem - (*auxInt)--] = DeepCopy(aux->c);
+			if (aux->c.pret > prag) {
+				v->vect = (Consultatie*)realloc(v->vect, sizeof(Consultatie) * (++v->nrElem));
+				v->vect[v->nrElem-1] = DeepCopy(aux->c);
+			}
 			aux = aux->next;
 		}
 		temp = temp->next;
 	}
-}
-
-void valoriPestePrag(nodLP* cap, const int prag, Vector* v)
-{
-	v->nrElem = 0;
-	nrElemVector(cap, prag, &v->nrElem);
-	v->vect = (Consultatie*)malloc(sizeof(Consultatie) * v->nrElem);
-	unsigned char auxInt = v->nrElem;
-	populareVector(cap, *v, prag, &auxInt);
 }
 
 void traversareVector(Vector v)
@@ -338,6 +313,8 @@ void main()
 {
 	nodLP* cap = NULL;
 	Vector v;
+	v.nrElem = 0;
+	v.vect = NULL;
 	const unsigned char numeFisier[] = "date.txt";
 	const char numeSpecialitate[] = "Ortopedie si Traumatologie";
 	const char diagnostic[] = "Tensiune arteriala marita";
@@ -364,15 +341,15 @@ void main()
 	}
 	else
 	{
-		printf("\n\nConsultatia din data de %s a fost actualizata cu noul pret %d.\n", dataConsultatie, pretNou);
+		printf("\n\nConsultatia din data de %s a fost actualizata cu noul pret %d RON.\n", dataConsultatie, pretNou);
 		printf("\n\nConsultatia afectata:\n\n");
 		printf("Data: %s\nNume: %s\nSpecialitate: %s\nDiagnostic: %s\nPret: %d RON\n\n", rez->c.data, rez->c.nume, rez->c.specialitate, rez->c.diagnostic, rez->c.pret);
 	}
 	stergeConsultatiiCuDiagnostic(cap, diagnostic);
 	printf("\n\n\n");
 	traversareLP(cap);
-	valoriPestePrag(cap, prag, &v);
-	printf("\n\n\nVectorul:\n\n\n");
+	populareVector(cap, &v, prag);
+	printf("\n\n\nVectorul cu valori peste %d RON:\n\n\n", prag);
 	traversareVector(v);
 	dezalocareListaListe(&cap);
 	dezalocare(&v);

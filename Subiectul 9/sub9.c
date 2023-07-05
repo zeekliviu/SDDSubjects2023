@@ -101,9 +101,7 @@ void inserareTabela(hashT tabela, Comanda c)
 void citireFisier(hashT* tabela, const unsigned char* numeFisier)
 {
 	tabela->nrElem = DIM;
-	tabela->vect = (nodLS**)malloc(sizeof(nodLS*)*tabela->nrElem);
-	for (unsigned char i = 0; i < tabela->nrElem; i++)
-		tabela->vect[i] = NULL;
+	tabela->vect = (nodLS**)calloc(tabela->nrElem, sizeof(nodLS*));
 	FILE* f = fopen(numeFisier, "r");
 	unsigned char nrComenzi;
 	Comanda c;

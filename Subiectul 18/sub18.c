@@ -73,9 +73,7 @@ void citireFisier(hashT* tabela, const unsigned char* numeFisier)
 	if (!f)
 		exit(-1);
 	tabela->nrElem = DIM;
-	tabela->vect = (nodLS**)malloc(sizeof(nodLS*) * tabela->nrElem);
-	for (unsigned char i = 0; i < tabela->nrElem; i++)
-		tabela->vect[i] = NULL;
+	tabela->vect = (nodLS**)calloc(tabela->nrElem, sizeof(nodLS*));
 	unsigned char nrProiecte;
 	fscanf(f, "%hhu", &nrProiecte);
 	Proiect p;

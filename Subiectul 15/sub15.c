@@ -170,17 +170,6 @@ float medieLista(nodLS* cap)
 	return rez / nrElem;
 }
 
-void nrElem(nodLS* cap, unsigned char* nrElem, const float medie)
-{
-	nodLS* aux = cap;
-	while (aux)
-	{
-		if (aux->info.populatie > medie)
-			(*nrElem)++;
-		aux = aux->next;
-	}
-}
-
 void stergeOraseSubMedie(nodLS** cap, nodLS** coada)
 {
 	const float medie = medieLista(*cap);
@@ -228,24 +217,18 @@ Localitate DeepCopy(Localitate l)
 	return noua;
 }
 
-void populareVector(nodLS* cap, Vector v, unsigned char* auxInt, const float medie)
+void populareVector(nodLS* cap, Vector* v, const float medie)
 {
 	nodLS* temp = cap;
 	while (temp)
 	{
 		if (temp->info.populatie > medie)
-			v.vect[v.nrElem - (*auxInt)--] = DeepCopy(temp->info);
+		{
+			v->vect = (Localitate*)realloc(v->vect, sizeof(Localitate) * (++v->nrElem));
+			v->vect[v->nrElem - 1] = DeepCopy(temp->info);
+		}
 		temp = temp->next;
 	}
-}
-
-void orasePesteMedie(nodLS* cap, Vector* v)
-{
-	v->nrElem = 0;
-	nrElem(cap, &v->nrElem, medieLista(cap));
-	v->vect = (Localitate*)malloc(sizeof(Localitate) * v->nrElem);
-	unsigned char auxInt = v->nrElem;
-	populareVector(cap, *v, &auxInt, medieLista(cap));
 }
 
 void traversareVector(Vector v)
@@ -283,6 +266,8 @@ void main()
 {
 	nodLS* cap, *coada;
 	Vector v;
+	v.nrElem = 0;
+	v.vect = NULL;
 	bool flag;
 	const unsigned char* numeFisier = "date.txt";
 	const char* judet = "Cluj";
@@ -317,7 +302,7 @@ void main()
 	printf("\n\n------------------------------------------------\n\n");
 	traversareListaDublaDeLaCoada(coada);
 	printf("\n\n------------------------------------------------\n\n");
-	orasePesteMedie(cap, &v);
+	populareVector(cap, &v, medieLista(cap));
 	traversareVector(v);
 	dezalocareLista(&cap, &coada);
 	dezalocareVector(&v);

@@ -138,29 +138,10 @@ ContBancar DeepCopy(ContBancar* cb)
 	return nou;
 }
 
-void sortareDupaValuta(hashT tabela,Vector1* v, const char* valuta)
+void sortareDupaValuta(hashT tabela, Vector1* v, const char* valuta)
 {
-	unsigned char nrElemVector = 0;
-	for(unsigned char i=0; i<tabela.nrElem; i++)
-		if (tabela.vect[i])
-		{
-			nodLS* aux = tabela.vect[i];
-			while (aux)
-			{
-				if (!strcmp(aux->info->valuta_cont, valuta))
-					nrElemVector++;
-				aux = aux->next;
-			}
-		}
-	if (nrElemVector == 0)
-	{
-		v->nrElem = 0;
-		v->vect = NULL;
-		return;
-	}
-	v->nrElem = nrElemVector;
-	unsigned char auxIndex = v->nrElem;
-	v->vect = (ContBancar*)malloc(sizeof(ContBancar) * v->nrElem);
+	v->nrElem = 0;
+	v->vect = NULL;
 	for(unsigned char i=0; i<tabela.nrElem; i++)
 		if (tabela.vect[i])
 		{
@@ -169,8 +150,8 @@ void sortareDupaValuta(hashT tabela,Vector1* v, const char* valuta)
 			{
 				if (!strcmp(aux->info->valuta_cont, valuta))
 				{
-					v->vect[v->nrElem - auxIndex] = DeepCopy(aux->info);
-					auxIndex--;
+					v->vect = (ContBancar*)realloc(v->vect, ++v->nrElem * sizeof(ContBancar));
+					v->vect[v->nrElem - 1] = DeepCopy(aux->info);
 				}
 				aux = aux->next;
 			}
@@ -188,6 +169,7 @@ void traversareVector1(Vector1 v)
 Vector2* caracterizareClustere(hashT tabela, unsigned char* nrClustere)
 {
 	*nrClustere = 0;
+	Vector2* v = NULL;
 	for(unsigned char i=0; i<tabela.nrElem; i++)
 		if (tabela.vect[i])
 		{
@@ -199,25 +181,10 @@ Vector2* caracterizareClustere(hashT tabela, unsigned char* nrClustere)
 				aux = aux->next;
 			}
 			if (nrElementeLista > 1)
-				(*nrClustere)++;
-		}
-	Vector2* v = (Vector2*)malloc(sizeof(Vector2) * (*nrClustere));
-	unsigned char auxInteger = *nrClustere;
-	for (unsigned char i = 0; i < tabela.nrElem; i++)
-		if (tabela.vect[i])
-		{
-			unsigned char nrElementeLista = 0;
-			nodLS* aux = tabela.vect[i];
-			while (aux)
 			{
-				nrElementeLista++;
-				aux = aux->next;
-			}
-			if (nrElementeLista > 1)
-			{
-				v[*nrClustere - auxInteger].dimCluster = nrElementeLista;
-				v[*nrClustere - auxInteger].indexTabela = i;
-				auxInteger--;
+				v = (Vector2*)realloc(v, sizeof(Vector2) * (++(*nrClustere)));
+				v[*nrClustere - 1].dimCluster = nrElementeLista;
+				v[*nrClustere - 1].indexTabela = i;
 			}
 		}
 	return v;
@@ -334,10 +301,10 @@ void main()
 {
 	hashT tabela;
 	Vector1 v1;
-	Vector2* v2;
+	Vector2* v2 = NULL;
 	Vector3* v3;
-	unsigned char nrElemV2;
-	unsigned char nrElemV3;
+	unsigned char nrElemV2 = 0;
+	unsigned char nrElemV3 = 0;
 	tabela.nrElem = DIM;
 	tabela.vect = (nodLS**)malloc(sizeof(nodLS*) * tabela.nrElem);
 	for (unsigned char i = 0; i < tabela.nrElem; i++)
@@ -346,18 +313,21 @@ void main()
 	citireFisier(tabela, "date.txt");
 	traversareHashT(tabela);
 	sortareDupaValuta(tabela, &v1, valuta);
-	printf("\n\nConturi care au valuta %s\n", valuta);
-	traversareVector1(v1);
+	if(v1.vect)
+	{
+		printf("\n\nConturi care au valuta %s\n", valuta);
+		traversareVector1(v1);
+		v3 = solduriLaNivelDeClient(tabela, v1, &nrElemV3);
+		printf("\n\nSolduri agregate la nivel de client:\n");
+		traversareVector3(v3, nrElemV3);
+		dezalocareVector3(&v3, &nrElemV3);
+		dezalocareVector1(&v1);
+	}
 	printf("\nCaracterizare a clusterelor din hashT:\n");
 	v2 = caracterizareClustere(tabela, &nrElemV2);
 	traversareVector2(v2, nrElemV2);
-	v3 = solduriLaNivelDeClient(tabela, v1, &nrElemV3);
-	printf("\n\nSolduri agregate la nivel de client:\n");
-	traversareVector3(v3, nrElemV3);
 	free(v2);
-	nrElemV2 = -1;
-	dezalocareVector1(&v1);
-	dezalocareVector3(&v3, &nrElemV3);
+	nrElemV2 = 0;
 	dezalocareHashT(&tabela);
 	_CrtDumpMemoryLeaks();
 }

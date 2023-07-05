@@ -8,9 +8,6 @@
 #define LINE_SIZE 128
 
 typedef struct InfoReteta Reteta;
-typedef struct ListaDubla nodLS;
-typedef struct Heap Heap;
-typedef struct ListaDeFrecventa Nod;
 
 struct InfoReteta
 {
@@ -21,17 +18,24 @@ struct InfoReteta
 	float valoare;
 };
 
+typedef struct ListaDubla nodLS;
+
 struct ListaDubla
 {
 	Reteta info;
 	nodLS* next, * prev;
 };
 
+typedef struct Heap Heap; 
+
+
 struct Heap
 {
 	unsigned int* vect;
 	char nrElem;
 };
+
+typedef struct ListaDeFrecventa Nod;
 
 struct ListaDeFrecventa
 {
@@ -217,13 +221,8 @@ void filtrare(Heap h, char index)
 
 void inserareHeap(Heap* h, const int info)
 {
-	unsigned int* nou = (int*)malloc(sizeof(unsigned int) * (h->nrElem + 1));
-	for (char i = 0; i < h->nrElem; i++)
-		nou[i] = h->vect[i];
-	nou[h->nrElem] = info;
-	h->nrElem++;
-	free(h->vect);
-	h->vect = nou;
+	h->vect = (int*)realloc(h->vect, sizeof(int) * (++h->nrElem));
+	h->vect[h->nrElem - 1] = info;
 	for (char i = (h->nrElem - 1) / 2; i >= 0; i--)
 		filtrare(*h, i);
 }

@@ -131,17 +131,6 @@ void nrFrunze(nodArb* rad, unsigned char* nrF)
 	}
 }
 
-void nrElemVector(nodArb* rad, unsigned char* nrElem, const unsigned int prag)
-{
-	if (rad)
-	{
-		nrElemVector(rad->st, nrElem, prag);
-		if (rad->info.durata > prag)
-			(*nrElem)++;
-		nrElemVector(rad->dr, nrElem, prag);
-	}
-}
-
 Proiect DeepCopy(Proiect p)
 {
 	Proiect nou = p;
@@ -150,24 +139,17 @@ Proiect DeepCopy(Proiect p)
 	return nou;
 }
 
-void populareVector(nodArb* rad, Vector v, const unsigned short prag, unsigned char* auxInt)
+void populareVector(nodArb* rad, Vector* v, const unsigned short prag)
 {
 	if (rad)
 	{
-		populareVector(rad->st, v, prag, auxInt);
-		if (rad->info.durata > prag)
-			v.vect[v.nrElem - (*auxInt)--] = DeepCopy(rad->info);
-		populareVector(rad->dr, v, prag, auxInt);
+		populareVector(rad->st, v, prag);
+		if (rad->info.durata > prag) {
+			v->vect = (Proiect*)realloc(v->vect, sizeof(Proiect) * (++v->nrElem));
+			v->vect[v->nrElem-1] = DeepCopy(rad->info);
+		}
+		populareVector(rad->dr, v, prag);
 	}
-}
-
-void Arb2Vector(nodArb* rad, Vector* v, const unsigned short prag)
-{
-	v->nrElem = 0;
-	nrElemVector(rad, &v->nrElem, prag);
-	v->vect = (Proiect*)malloc(sizeof(Proiect) * v->nrElem);
-	unsigned char auxInt = v->nrElem;
-	populareVector(rad, *v, prag, &auxInt);
 }
 
 void traversareVector(Vector v)
@@ -200,6 +182,8 @@ void main()
 {
 	nodArb* rad;
 	Vector v;
+	v.nrElem = 0;
+	v.vect = NULL;
 	const char* numeFisier = "date.txt";
 	const char* beneficiarCautat = "Universitatea Babes-Bolyai Cluj";
 	const float procent = 3.14f;
@@ -234,7 +218,7 @@ void main()
 	}
 	nrFrunze(rad, &nrF);
 	printf("\n\nSunt %hhu frunze in arbore\n", nrF);
-	Arb2Vector(rad, &v, prag);
+	populareVector(rad, &v, prag);
 	if (v.nrElem)
 	{
 		printf("\n\nProiectele cu durata mai mare decat %hu\n\n", prag);

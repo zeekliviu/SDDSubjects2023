@@ -51,13 +51,7 @@ struct ArboreBinarDeCautare
 nodArb* creareNodArb(Comanda c, nodArb* st, nodArb* dr)
 {
 	nodArb* nou = (nodArb*)malloc(sizeof(nodArb));
-	nou->info.cod_client = c.cod_client;
-	nou->info.id_comanda = c.id_comanda;
-	nou->info.pret = c.pret;
-	nou->info.timp_livrare = c.timp_livrare;
-	nou->info.numeClient = strdup(c.numeClient);
-	nou->info.adresaLivrare = strdup(c.adresaLivrare);
-	nou->info.status = strdup(c.status);
+	nou->info = c;
 	nou->st = st;
 	nou->dr = dr;
 	return nou;
@@ -119,22 +113,8 @@ void citireDinFisier(nodArb** rad, const unsigned char* numeFisier)
 		fscanf(f, " %[^\n]", buffer);
 		c.status = strdup(buffer);
 		inserareInArbore(rad, c);
-		free(c.numeClient);
-		free(c.adresaLivrare);
-		free(c.status);
 	}
 	fclose(f);
-}
-
-void nrComenziPesteTimp(nodArb* rad, const int timpLivrare, Vector1* v)
-{
-	if (rad != NULL)
-	{
-		nrComenziPesteTimp(rad->st, timpLivrare, v);
-		if (rad->info.timp_livrare > timpLivrare)
-			v->nrElem++;
-		nrComenziPesteTimp(rad->dr, timpLivrare, v);
-	}
 }
 
 Comanda DeepCopyArb(Comanda c)
@@ -150,17 +130,17 @@ Comanda DeepCopyArb(Comanda c)
 	return nou;
 }
 
-void populareComenziPesteTimp(nodArb* rad, const int timpLivrare, Vector1 v, int* aux)
+void populareComenziPesteTimp(nodArb* rad, const int timpLivrare, Vector1* v)
 {
 	if (rad != NULL)
 	{
-		populareComenziPesteTimp(rad->st, timpLivrare, v, aux);
+		populareComenziPesteTimp(rad->st, timpLivrare, v);
 		if (rad->info.timp_livrare > timpLivrare)
 		{
-			v.vect[v.nrElem - (*aux)] = DeepCopyArb(rad->info);
-			(*aux)--;
+			v->vect = (Comanda*)realloc(v->vect, sizeof(Comanda) * (++v->nrElem));
+			v->vect[v->nrElem - 1] = DeepCopyArb(rad->info);
 		}
-		populareComenziPesteTimp(rad->dr, timpLivrare, v, aux);
+		populareComenziPesteTimp(rad->dr, timpLivrare, v);
 	}
 }
 
@@ -192,13 +172,8 @@ void filtrare(Heap h, unsigned char index)
 
 void inserare(Heap* h, Comanda c)
 {
-	Comanda* vectNou = (Comanda*)malloc((h->nrElem + 1) * sizeof(Comanda));
-	for (unsigned char i = 0; i < h->nrElem; i++)
-		vectNou[i] = h->vect[i];
-	h->nrElem++;
-	vectNou[h->nrElem - 1] = DeepCopyArb(c);
-	free(h->vect);
-	h->vect = vectNou;
+	h->vect = (Comanda*)realloc(h->vect, ++h->nrElem * sizeof(Comanda));
+	h->vect[h->nrElem - 1] = DeepCopyArb(c);
 	for (char i = (h->nrElem - 1) / 2; i >= 0; i--)
 		filtrare(*h, i);
 }
@@ -213,40 +188,30 @@ void BST2Heap(nodArb* rad, Heap* h)
 	}
 }
 
-void ClientiUnici(nodArb* rad, int** coduri, unsigned char* k)
+void populareVector2(nodArb* rad, unsigned char* nrC, Vector2** w)
 {
 	if (rad != NULL)
 	{
-		ClientiUnici(rad->st, coduri, k);
+		populareVector2(rad->st, nrC, w);
 		bool flag = false;
-		for (unsigned char i = 0; i < *k; i++)
-		{
-			if ((*coduri)[i]==rad->info.cod_client)
+		unsigned char i;
+		for(i=0; i<*nrC; i++)
+			if ((*w)[i].cod_client == rad->info.cod_client)
 			{
 				flag = true;
 				break;
 			}
-		}
 		if (!flag)
 		{
-			(*coduri)[(*k)++] = rad->info.cod_client;
+			*w = (Vector2*)realloc(*w, ++(*nrC) * sizeof(Vector2));
+			(*w)[*nrC - 1].cod_client = rad->info.cod_client;
+			(*w)[*nrC - 1].suma = rad->info.pret;
 		}
-		ClientiUnici(rad->dr, coduri, k);
-	}
-}
-
-void populareVector2(nodArb* rad, int* coduri, unsigned char nrC, Vector2** w)
-{
-	if (rad != NULL)
-	{
-		populareVector2(rad->st, coduri, nrC, w);
-		for(unsigned char i = 0; i<nrC; i++)
-			if (coduri[i] == rad->info.cod_client)
-			{
-				(*w)[i].suma += rad->info.pret;
-				break;
-			}
-		populareVector2(rad->dr, coduri, nrC, w);
+		else
+		{
+			(*w)[i].suma += rad->info.pret;
+		}
+		populareVector2(rad->dr, nrC, w);
 	}
 }
 
@@ -308,30 +273,22 @@ void main()
 	h.nrElem = 0;
 	h.vect = NULL;
 	v.nrElem = 0;
+	v.vect = NULL;
 	const int timpLivrare = 35;
 	int timpLivrareMaxim = 0;
 	citireDinFisier(&rad, "date.txt");
 	inordine(rad);
-	nrComenziPesteTimp(rad, timpLivrare, &v);
-	v.vect = (Comanda*)malloc(sizeof(Comanda) * v.nrElem);
-	int aux = v.nrElem;
-	populareComenziPesteTimp(rad, timpLivrare, v, &aux);
+	populareComenziPesteTimp(rad, timpLivrare, &v);
 	printf("\nComenzile cu un timp de livrare mai mare de %d\n", timpLivrare);
 	traversareVector1(v);
 	BST2Heap(rad, &h);
-	int* coduriClient = (int*)malloc(sizeof(int) * h.nrElem);
+	Vector2* w = NULL;
 	unsigned char k = 0;
-	ClientiUnici(rad, &coduriClient, &k);
-	Vector2* w;
-	w = (Vector2*)malloc(sizeof(Vector2) * k);
-	for (unsigned char i = 0; i < k; i++)
-		w[i].cod_client = coduriClient[i], w[i].suma = 0.0f;
-	populareVector2(rad, coduriClient, k, &w);
+	populareVector2(rad, &k, &w);
 	afisareVector2(w, k);
 	dezalocareArb(&rad);
 	dezalocareHeap(&h);
 	dezalocareVector1(&v);
 	dezalocareVector2(&w);
-	free(coduriClient);
 	_CrtDumpMemoryLeaks();
 }

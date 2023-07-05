@@ -150,9 +150,7 @@ unsigned char inaltimeArb(nodArb* rad)
 void numaraNoduriPeNivel(nodArb* rad, Vector* v, const unsigned char nrNoduri)
 {
 	v->nrElem = inaltimeArb(rad);
-	v->vect = (unsigned char*)malloc(sizeof(unsigned char) * v->nrElem);
-	for(unsigned char i=0; i<v->nrElem; i++)
-		v->vect[i] = 0;
+	v->vect = (unsigned char*)calloc(v->nrElem, sizeof(unsigned char));
 	nodCoada* coada = (nodCoada*)malloc(sizeof(nodCoada) * nrNoduri);
 	unsigned char cap_coada = 0;
 	unsigned char coada_count = 1;

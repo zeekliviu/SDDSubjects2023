@@ -137,25 +137,16 @@ void parcurgePentruIncasari(nodArb* rad, CF* cursa, const float incasari)
 	}
 }
 
-void nrFrunzele(nodArb* rad, unsigned char* nrFrunze)
+void populeazaVector(nodArb* rad, Vector** v, unsigned char *nrElem)
 {
 	if (rad)
 	{
-		nrFrunzele(rad->st, nrFrunze);
-		if (rad->st == NULL && rad->dr == NULL)
-			(*nrFrunze)++;
-		nrFrunzele(rad->dr, nrFrunze);
-	}
-}
-
-void populeazaVector(nodArb* rad, Vector* v, unsigned char nrElem, unsigned char* aux)
-{
-	if (rad)
-	{
-		populeazaVector(rad->st, v, nrElem, aux);
-		if (rad->dr == NULL && rad->st == NULL)
-			v[nrElem - (*aux)].id = rad->info.id, (*aux)--;
-		populeazaVector(rad->dr, v, nrElem, aux);
+		populeazaVector(rad->st, v, nrElem);
+		if (rad->dr == NULL && rad->st == NULL) {
+			*v = (Vector*)realloc(*v, ++(*nrElem) * sizeof(Vector));
+			(*v)[*nrElem-1].id = rad->info.id;
+		}
+		populeazaVector(rad->dr, v, nrElem);
 	}
 }
 
@@ -166,14 +157,6 @@ CF cursaIncasariMaxime(nodArb* rad)
 	CF cursaCuIncasariMaxime;
 	parcurgePentruIncasari(rad, &cursaCuIncasariMaxime, max);
 	return cursaCuIncasariMaxime;
-}
-
-void alocaVectorFrunze(nodArb* rad, Vector** v, unsigned char* nrElem)
-{
-	nrFrunzele(rad, nrElem);
-	*v = (Vector*)malloc(sizeof(Vector) * (*nrElem));
-	unsigned char aux = *nrElem;
-	populeazaVector(rad, *v, *nrElem, &aux);
 }
 
 void traversareVector(Vector* v, unsigned char dim)
@@ -203,7 +186,7 @@ void main()
 {
 	nodArb* rad = NULL;
 	CF cursaMaxima;
-	Vector* v;
+	Vector* v = NULL;
 	unsigned char nrElem = 0;
 	unsigned int nrBilete = 0;
 	const Data data = { 14,2,2024 };
@@ -219,7 +202,7 @@ void main()
 	cursaMaxima = cursaIncasariMaxime(rad);
 	printf("Id tren: %u\nData: %hhu/%hhu/%hu\nNr. vagoane: %hhu\nBilete cumparate la clasa I: %hu\nBilete cumparate la clasa a II-a: %hu\nPret bilet la clasa I: %.2f\nPret bilet la clasa a II-a: %.2f\n\n", cursaMaxima.id, cursaMaxima.data.zi, cursaMaxima.data.luna, cursaMaxima.data.an, cursaMaxima.nrVagoane, cursaMaxima.bileteCumparate[0], cursaMaxima.bileteCumparate[1], cursaMaxima.pretBilete[0], cursaMaxima.pretBilete[1]);
 	printf("\n\nVectorul cu id-urile frunzelor:\n\n");
-	alocaVectorFrunze(rad, &v, &nrElem);
+	populeazaVector(rad, &v, &nrElem);
 	traversareVector(v, nrElem);
 	dezalocareVector(&v, &nrElem);
 	dezalocaArb(&rad);

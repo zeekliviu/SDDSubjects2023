@@ -142,18 +142,6 @@ void dezalocareArb(nodArb** rad)
 	}
 }
 
-void nrFotografiiLaRezolutie(nodArb* rad, const float rezolutie, unsigned char* nrFoto)
-{
-	if (rad)
-	{
-		nrFotografiiLaRezolutie(rad->st, rezolutie, nrFoto);
-		if (rad->info.rezolutie == rezolutie)
-			(*nrFoto)++;
-		nrFotografiiLaRezolutie(rad->dr, rezolutie, nrFoto);
-	}
-}
-
-
 Fotografie creareFotografie(Fotografie f)
 {
 	Fotografie noua = f;
@@ -161,24 +149,15 @@ Fotografie creareFotografie(Fotografie f)
 	return noua;
 }
 
-void populareVector(nodArb* rad, Vector v, const float rezolutie, unsigned char* aux)
+void populareVector(nodArb* rad, Vector* v, const float rezolutie)
 {
 	if (rad)
 	{
-		populareVector(rad->st, v, rezolutie, aux);
+		populareVector(rad->st, v, rezolutie);
 		if (rad->info.rezolutie == rezolutie)
-			v.vect[v.nrElem - (*aux)--] = creareFotografie(rad->info);
-		populareVector(rad->dr, v, rezolutie, aux);
+			v->vect = (Fotografie*)realloc(v->vect, sizeof(Fotografie) * (++v->nrElem)), v->vect[v->nrElem - 1] = creareFotografie(rad->info);
+		populareVector(rad->dr, v, rezolutie);
 	}
-}
-
-void Arbore2Vect(nodArb* rad, Vector* v, const float rezolutie)
-{
-	v->nrElem = 0;
-	nrFotografiiLaRezolutie(rad, rezolutie, &v->nrElem);
-	v->vect = (Fotografie*)malloc(sizeof(Fotografie) * v->nrElem);
-	unsigned char aux = v->nrElem;
-	populareVector(rad, *v, rezolutie, &aux);
 }
 
 void traversareVector(Vector v)
@@ -199,6 +178,8 @@ void main()
 {
 	nodArb* rad = NULL;
 	Vector v;
+	v.nrElem = 0;
+	v.vect = NULL;
 	const unsigned char locatie[] = "Eiffel Tower, Paris";
 	const Data dataNoua = { 7,7,2007 };
 	const unsigned int idPoza = 10112;
@@ -222,7 +203,7 @@ void main()
 	stergeRad(&rad);
 	inordine(rad);
 	printf("\n\nVectorasul care are fotografiile cu rezolutia egala cu %.2f DPI\n\n", rezolutie);
-	Arbore2Vect(rad, &v, rezolutie);
+	populareVector(rad, &v, rezolutie);
 	traversareVector(v);
 	dezalocareVector(&v);
 	dezalocareArb(&rad);

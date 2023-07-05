@@ -76,6 +76,19 @@ void inserareLista(nodLS** cap, nodLS** coada, Programare p)
 	}
 }
 
+void inserareListaHashT(nodLS** cap, Programare p)
+{
+	if (*cap == NULL)
+		*cap = creareNodListaDubla(p);
+	else
+	{
+		nodLS* nou = creareNodListaDubla(p);
+		nou->next = *cap;
+		(*cap)->prev = nou;
+		*cap = nou;
+	}
+}
+
 void citireFisier(nodLS** cap, nodLS** coada, const unsigned char* numeFisier)
 {
 	FILE* f = fopen(numeFisier, "r");
@@ -124,19 +137,6 @@ void traversareCoadaCap(nodLS* coada)
 	}
 }
 
-unsigned char nrProgramariDinLuna(const unsigned char luna, nodLS* capLista)
-{
-	unsigned char rez = 0;
-	nodLS* temp = capLista;
-	while (temp)
-	{
-		if (temp->info.data.luna == luna)
-			rez++;
-		temp = temp->next;
-	}
-	return rez;
-}
-
 Programare DeepCopy(Programare p)
 {
 	Programare noua;
@@ -150,16 +150,15 @@ Programare DeepCopy(Programare p)
 
 void adaugareProgramariDinLuna(const unsigned char luna, nodLS* capLista, Vector* v)
 {
-	v->nrElem = nrProgramariDinLuna(luna, capLista);
-	if (!v->nrElem)
-		return;
-	v->vect = (Programare*)malloc(sizeof(Programare) * v->nrElem);
-	unsigned char auxInt = v->nrElem;
+	v->vect = NULL;
+	v->nrElem = 0;
 	nodLS* temp = capLista;
 	while (temp)
 	{
-		if (temp->info.data.luna == luna)
-			v->vect[v->nrElem - auxInt--] = DeepCopy(temp->info);
+		if (temp->info.data.luna == luna) {
+			v->vect = (Programare*)realloc(v->vect, sizeof(Programare) * (++v->nrElem));
+			v->vect[v->nrElem - 1] = DeepCopy(temp->info);
+		}
 		temp = temp->next;
 	}
 }
@@ -186,25 +185,11 @@ nodLS* DeepCopyHashT(Programare p)
 void Lista2HashT(hashT* tabela, nodLS* cap)
 {
 	tabela->nrElem = DIM;
-	tabela->vect = (nodLS**)malloc(sizeof(nodLS*) * tabela->nrElem);
-	for (unsigned char i = 0; i < tabela->nrElem; i++)
-		tabela->vect[i] = NULL;
+	tabela->vect = (nodLS**)calloc(tabela->nrElem, sizeof(nodLS*));
 	nodLS* temp = cap;
 	while (temp)
 	{
-		if (tabela->vect[temp->info.data.luna-1] == NULL)
-			tabela->vect[temp->info.data.luna-1] = DeepCopyHashT(temp->info);
-		else
-		{
-			nodLS* nou = DeepCopyHashT(temp->info);
-			nodLS* aux = tabela->vect[temp->info.data.luna-1];
-			while (aux->next)
-			{
-				aux = aux->next;
-			}
-			nou->prev = aux;
-			aux->next = nou;
-		}
+		inserareListaHashT(&tabela->vect[temp->info.data.luna - 1], DeepCopy(temp->info));
 		temp = temp->next;
 	}
 }

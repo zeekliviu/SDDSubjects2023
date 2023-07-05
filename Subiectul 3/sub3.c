@@ -198,40 +198,19 @@ float gradOcupare(hashT tabela, const char* numeHotel, const char* perioadaIncep
 
 void HashT2Vector(hashT tabela, Vector* v, const char* numeClient)
 {
-	unsigned char nrElem = 0;
-	for (unsigned char i = 0; i < tabela.nrElem; i++)
-	{
-		if (tabela.vect[i] != NULL)
-		{
-			if (!strcmp(tabela.vect[i]->nume_client, numeClient))
-				nrElem++;
-		}
-	}
-	if (nrElem == 0)
-	{
-		v->nrElem = 0;
-		v->vect = NULL;
-		return;
-	}
-	v->vect = (Rezervare*)malloc(sizeof(Rezervare) * nrElem);
-	v->nrElem = nrElem;
-	unsigned char aux = nrElem;
+	v->nrElem = 0;
+	v->vect = NULL;
 	for (unsigned char i = 0; i < tabela.nrElem; i++)
 	{
 		if (tabela.vect[i] != NULL)
 		{
 			if (!strcmp(tabela.vect[i]->nume_client, numeClient))
 			{
-				v->vect[v->nrElem - aux].id = tabela.vect[i]->id;
-				v->vect[v->nrElem - aux].inceput = tabela.vect[i]->inceput;
-				v->vect[v->nrElem - aux].sfarsit = tabela.vect[i]->sfarsit;
-				v->vect[v->nrElem - aux].nr_camere_rezervate = tabela.vect[i]->nr_camere_rezervate;
-				v->vect[v->nrElem - aux].nr_camere_total = tabela.vect[i]->nr_camere_total;
-				v->vect[v->nrElem - aux].pret = tabela.vect[i]->pret;
-				v->vect[v->nrElem - aux].nume_client = strdup(tabela.vect[i]->nume_client);
-				v->vect[v->nrElem - aux].perioada_rezervarii = strdup(tabela.vect[i]->perioada_rezervarii);
-				v->vect[v->nrElem - aux].denumire_hotel = strdup(tabela.vect[i]->denumire_hotel);
-				aux--;
+				v->vect = (Rezervare*)realloc(v->vect, ++v->nrElem * sizeof(Rezervare));
+				v->vect[v->nrElem - 1] = *(tabela.vect[i]);
+				v->vect[v->nrElem - 1].denumire_hotel = strdup(tabela.vect[i]->denumire_hotel);
+				v->vect[v->nrElem - 1].perioada_rezervarii = strdup(tabela.vect[i]->perioada_rezervarii);
+				v->vect[v->nrElem - 1].nume_client = strdup(tabela.vect[i]->nume_client);
 			}
 		}
 	}
@@ -312,15 +291,13 @@ void main()
 	hashT tabela;
 	Vector v;
 	tabela.nrElem = DIM;
-	tabela.vect = (Rezervare**)malloc(sizeof(Rezervare*) * tabela.nrElem);
+	tabela.vect = (Rezervare**)calloc(tabela.nrElem, sizeof(Rezervare*));
 	const char numeHotel[] = "Hotel Transilvania";
 	const char perioadaInceput[] = "01-07-2023";
 	const char perioadaSfarsit[] = "11-08-2023";
 	const char Inceput[] = "01-07-2023";
 	const char Sfarsit[] = "08-07-2023";
 	const char numeClient[] = "Ion Popescu";
-	for (unsigned i = 0; i < tabela.nrElem; i++)
-		tabela.vect[i] = NULL;
 	citireFisier("date.txt", tabela);
 	traversareHashT(tabela);
 	printf("\nGradul de ocupare al hotelului %s intre %s si %s a fost de %.2f%%", numeHotel, perioadaInceput, perioadaSfarsit, gradOcupare(tabela, numeHotel, perioadaInceput, perioadaSfarsit)*100);

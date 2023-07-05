@@ -149,6 +149,7 @@ Angajat DeepCopy(Angajat a)
 void ListaListe2Vector(nodLP* listaListe, Vector* v, float pragSalariu)
 {
 	v->nrElem = 0;
+	v->vect = NULL;
 	nodLP* aux = listaListe;
 	while (aux)
 	{
@@ -156,21 +157,10 @@ void ListaListe2Vector(nodLP* listaListe, Vector* v, float pragSalariu)
 		while (aux2)
 		{
 			if (aux2->info.salariu > pragSalariu)
-				v->nrElem++;
-			aux2 = aux2->next;
-		}
-		aux = aux->next;
-	}
-	v->vect = (Angajat*)malloc(sizeof(Angajat) * v->nrElem);
-	unsigned char auxInteger = v->nrElem;
-	aux = listaListe;
-	while (aux)
-	{
-		nodLS* aux2 = aux->info;
-		while (aux2)
-		{
-			if (aux2->info.salariu > pragSalariu)
-				v->vect[v->nrElem - auxInteger] = DeepCopy(aux2->info), auxInteger--;
+			{
+				v->vect = (Angajat*)realloc(v->vect, ++v->nrElem * sizeof(Angajat));
+				v->vect[v->nrElem - 1] = DeepCopy(aux2->info);
+			}
 			aux2 = aux2->next;
 		}
 		aux = aux->next;

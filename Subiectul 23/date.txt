@@ -1,0 +1,55 @@
+10
+Bucuresti
+1883425
+228.0
+Bucuresti
+Cluj-Napoca
+324576
+179.5
+Cluj
+Timisoara
+319279
+130.5
+Timis
+Calarasi
+290422
+93.9
+Calarasi
+Constanta
+283872
+124.0
+Constanta
+Craiova
+269506
+81.4
+Dolj
+Brasov
+276088
+267.0
+Brasov
+Galati
+249432
+246.1
+Galati
+Oradea
+196367
+111.4
+Bihor
+Arad
+159074
+46.2
+Arad
+13
+1 2
+2 3
+3 4
+4 5
+5 6
+6 7
+7 8
+8 1
+1 9
+9 10
+10 2
+2 5
+1 5

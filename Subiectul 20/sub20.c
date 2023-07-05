@@ -82,9 +82,7 @@ void citireFisier(hashT* tabela, const unsigned char* numeFisier)
 	if (!f)
 		exit(-1);
 	tabela->nrElem = DIM;
-	tabela->vect = (nodLS**)malloc(sizeof(nodLS) * tabela->nrElem);
-	for (unsigned char i = 0; i < tabela->nrElem; i++)
-		tabela->vect[i] = NULL;
+	tabela->vect = (nodLS**)calloc(tabela->nrElem, sizeof(nodLS*));
 	unsigned char nrElem;
 	Gradinita g;
 	fscanf(f, "%hhu", &nrElem);
@@ -191,19 +189,14 @@ void hashT2ListaDubla(hashT tabela, nodLS** cap)
 
 void spargeListe(nodLS** cap, nodLS** capPestePrag, nodLS** capSubPrag, const unsigned char prag)
 {
-	nodLS* temp = *cap;
 	*capPestePrag = *capSubPrag = NULL;
-	while (temp)
+	while (*cap)
 	{
+		nodLS* temp = *cap;
 		if (temp->info.nrActualCopii > prag)
 			inserareListaDublaDinHashT(capPestePrag, temp->info);
 		else inserareListaDublaDinHashT(capSubPrag, temp->info);
-		temp = temp->next;
-	}
-	while (*cap)
-	{
-		temp = *cap;
-		(*cap) = (*cap)->next;
+		*cap = (*cap)->next;
 		free(temp->info.nume);
 		free(temp->info.oras);
 		free(temp);

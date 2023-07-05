@@ -171,42 +171,33 @@ unsigned char nrElementeLista(nodLS* cap)
 	return nr;
 }
 
-void agregarePasageriPeDestinatiiInVector(nodLS* cap, Vector** v, unsigned char* nrElemVector, const unsigned char nrElementeLis)
+void agregarePasageriPeDestinatiiInVector(nodLS* cap, Vector** v, unsigned char* nrElemVector)
 {
-	char** destinatii = (char**)malloc(sizeof(char*) * nrElementeLis);
-	for (unsigned char i = 0; i < nrElementeLis; i++)
-		destinatii[i] = NULL;
-	unsigned char aux = nrElementeLis;
+	*nrElemVector = 0;
+	*v = NULL;
 	nodLS* temp = cap;
 	while (temp)
 	{
 		bool flag = false;
-		for (unsigned char i = 0; i < nrElementeLis; i++)
-			if (destinatii[i])
-				if (!strcmp(temp->info.destinatie, destinatii[i]))
+		unsigned char i;
+		for (i = 0; i < *nrElemVector; i++)
+				if (!strcmp(temp->info.destinatie, (*v)[i].destinatie))
 				{
 					flag = true;
 					break;
 				}
 		if (!flag)
-			destinatii[nrElementeLis - aux--] = strdup(temp->info.destinatie), (*nrElemVector)++;
+		{
+			(*v) = (Vector*)realloc(*v, sizeof(Vector) * (++(*nrElemVector)));
+			(*v)[*nrElemVector - 1].destinatie = strdup(temp->info.destinatie);
+			(*v)[*nrElemVector - 1].nrTotalPasageri = temp->info.nrPasageri;
+		}
+		else
+		{
+			(*v)[i].nrTotalPasageri += temp->info.nrPasageri;
+		}
 		temp = temp->next;
 	}
-	*v = (Vector*)malloc(sizeof(Vector) * (*nrElemVector));
-	for (unsigned char i = 0; i < *nrElemVector; i++)
-	{
-		(*v)[i].destinatie = strdup(destinatii[i]);
-		(*v)[i].nrTotalPasageri = 0;
-		temp = cap;
-		while (temp)
-		{
-			if (!strcmp(temp->info.destinatie, (*v)[i].destinatie))
-				(*v)[i].nrTotalPasageri += temp->info.nrPasageri;
-			temp = temp->next;
-		}
-		free(destinatii[i]);
-	}
-	free(destinatii);
 }
 
 void traversareVector(Vector* v, const unsigned char dim)
@@ -277,8 +268,7 @@ void main()
 	printf("\n\nLista de la coada-cap dupa ce au fost sterse cursele cu destinatia %s\n\n", destinatie);
 	getCoadaLista(cap, &coada);
 	traversareCoadaCap(coada); 
-	nrElemLista = nrElementeLista(cap);
-	agregarePasageriPeDestinatiiInVector(cap, &v, &nrElemVector, nrElemLista);
+	agregarePasageriPeDestinatiiInVector(cap, &v, &nrElemVector);
 	traversareVector(v, nrElemVector);
 	dezalocareLista(&cap);
 	dezalocareVector(&v, &nrElemVector);

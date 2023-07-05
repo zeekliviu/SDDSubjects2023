@@ -43,12 +43,7 @@ struct VectorDictionar
 nodArb* creareNodArb(Spectacol s, nodArb* st, nodArb* dr)
 {
 	nodArb* nou = (nodArb*)malloc(sizeof(nodArb));
-	nou->info.durata = s.durata;
-	nou->info.idSpectacol = s.idSpectacol;
-	strcpy(nou->info.dataSustinere, s.dataSustinere);
-	nou->info.numeClient = strdup(s.numeClient);
-	nou->info.locatie = strdup(s.locatie);
-	nou->info.pretBilet = s.pretBilet;
+	nou->info = s;
 	nou->st = st;
 	nou->dr = dr;
 	return nou;
@@ -84,8 +79,6 @@ unsigned char citireFisier(nodArb** rad, const unsigned char* numeFisier)
 		s.locatie = strdup(buffer);
 		fscanf(f, "%hhu", &s.durata);
 		inserareArbore(rad, s);
-		free(s.numeClient);
-		free(s.locatie);
 	}
 	fclose(f);
 	return nrSpectacole;
@@ -113,35 +106,17 @@ Spectacol DeepCopy(Spectacol s)
 	return nou;
 }
 
-void parcurgeSiVerifica(nodArb* rad, const unsigned char* data, Vector v, unsigned char* idx)
+void parcurgeSiVerifica(nodArb* rad, const unsigned char* data, Vector* v)
 {
 	if (rad != NULL)
 	{
-		parcurgeSiVerifica(rad->st, data, v, idx);
-		if (!strcmp(rad->info.dataSustinere, data))
-			v.vect[(*idx)++] = DeepCopy(rad->info);
-		parcurgeSiVerifica(rad->dr, data, v, idx);
+		parcurgeSiVerifica(rad->st, data, v);
+		if (!strcmp(rad->info.dataSustinere, data)) {
+			v->vect = (Spectacol*)realloc(v->vect, ++v->nrElem * sizeof(Spectacol));
+			v->vect[v->nrElem-1] = DeepCopy(rad->info);
+		}
+		parcurgeSiVerifica(rad->dr, data, v);
 	}
-}
-
-void nrSpectacoleDinData(nodArb* rad, const unsigned char* data, unsigned char* nrS)
-{
-	if (rad != NULL)
-	{
-		nrSpectacoleDinData(rad->st, data, nrS);
-		if (!strcmp(rad->info.dataSustinere, data))
-			(*nrS)++;
-		nrSpectacoleDinData(rad->dr, data, nrS);
-	}
-}
-
-void Arbore2Vector(nodArb* rad, Vector* v, unsigned char* nrs, const unsigned char* data)
-{
-	nrSpectacoleDinData(rad, data, nrs);
-	v->nrElem = *nrs;
-	v->vect = (Spectacol*)malloc(sizeof(Spectacol) * v->nrElem);
-	unsigned char idx = 0;
-	parcurgeSiVerifica(rad, data, *v, &idx);
 }
 
 void parcurgeVectorSpectacole(Vector v)
@@ -150,52 +125,31 @@ void parcurgeVectorSpectacole(Vector v)
 		printf("Id spectacol: %hhu\nPret: %.2f\nNume client: %s\nLocatie: %s\nData sustinere: %s\nDurata: %hhu\n\n", v.vect[i].idSpectacol, v.vect[i].pretBilet, v.vect[i].numeClient, v.vect[i].locatie, v.vect[i].dataSustinere, v.vect[i].durata);
 }
 
-void nrClientiUnici(nodArb* rad, unsigned char** names, unsigned char* nrC)
+void arboreLaVectorDict(Dict** vec, nodArb* rad, unsigned char* dimVec)
 {
-	if (rad != NULL)
+	if (rad)
 	{
-		nrClientiUnici(rad->st, names, nrC);
+		arboreLaVectorDict(vec, rad->st, dimVec);
 		bool flag = false;
-		for (unsigned char i = 0; i < *nrC; i++)
-			if (!strcmp(rad->info.numeClient, names[i]))
+		unsigned char i;
+		for (i = 0; i < *dimVec; i++)
+			if (!strcmp(rad->info.numeClient, (*vec)[i].numeClient))
 			{
 				flag = true;
 				break;
 			}
 		if (!flag)
-			names[(*nrC)++] = strdup(rad->info.numeClient);
-		nrClientiUnici(rad->dr, names, nrC);
+		{
+			*vec = (Dict*)realloc(*vec, ++(*dimVec) * sizeof(Dict));
+			(*vec)[*dimVec - 1].numeClient = strdup(rad->info.numeClient);
+			(*vec)[*dimVec - 1].costTotal = rad->info.pretBilet;
+		}
+		else
+		{
+			(*vec)[i].costTotal += rad->info.pretBilet;
+		}
+		arboreLaVectorDict(vec, rad->dr, dimVec);
 	}
-}
-
-void populareVectorDict(Dict* v, unsigned char nrC, nodArb* rad)
-{
-	if (rad != NULL)
-	{
-		populareVectorDict(v, nrC, rad->st);
-		for (unsigned char i = 0; i < nrC; i++)
-			if (!strcmp(v[i].numeClient, rad->info.numeClient))
-			{
-				v[i].costTotal += rad->info.pretBilet;
-				break;
-			}
-		populareVectorDict(v, nrC, rad->dr);
-	}
-}
-
-void arboreLaVectorDict(Dict** vec, nodArb* rad, const unsigned char nrSpectacole, unsigned char* dim)
-{
-	unsigned char** names = (char**)malloc(sizeof(unsigned char*) * nrSpectacole);
-	for (unsigned char i = 0; i < nrSpectacole; i++)
-		names[i] = NULL;
-	nrClientiUnici(rad, names, dim);
-	*vec = (Dict*)malloc(sizeof(Dict)*(*dim));
-	for (unsigned char i = 0; i < *dim; i++)
-		(*vec)[i].numeClient = strdup(names[i]), (*vec)[i].costTotal = 0;
-	populareVectorDict(*vec, *dim, rad);
-	for (unsigned char i = 0; i < nrSpectacole; i++)
-		free(names[i]);
-	free(names);
 }
 
 void afisareVectorDict(Dict* dict, unsigned char dim)
@@ -288,16 +242,18 @@ void main()
 	nodArb* radSt = NULL;
 	nodArb* radDr = NULL;
 	Vector v;
-	Dict* dict;
+	v.vect = NULL;
+	v.nrElem = 0;
+	Dict* dict = NULL;
 	unsigned char dim = 0;
 	v.nrElem = 0;
 	const char data[] = "01.07.2023";
 	unsigned char nrSpectacole = citireFisier(&rad, "date.txt");
 	inordine(rad);
-	Arbore2Vector(rad, &v, &v.nrElem, data);
+	parcurgeSiVerifica(rad, data, &v);
 	printf("\nSpectacolele care au avut loc in data de %s sunt urmatoarele:\n\n", data);
 	parcurgeVectorSpectacole(v);
-	arboreLaVectorDict(&dict, rad, nrSpectacole, &dim);
+	arboreLaVectorDict(&dict, rad, &dim);
 	printf("\n\nCostul agregat pe clienti:\n\n");
 	afisareVectorDict(dict, dim);
 	spargereArbore(rad, &radSt, &radDr);

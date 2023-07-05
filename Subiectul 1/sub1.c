@@ -181,35 +181,16 @@ void totalIncasari(nodLS* cap, const char* denumire)
 void conversieListaLaVector(nodLS* cap, Vector* v, const char* denumire)
 {
 	nodLS* temp = cap;
-	unsigned char nr=0;
+	v->nrElem = 0;
+	v->info = NULL;
 	while (temp)
 	{
 		if (strcmp(temp->info->numeMedic, denumire) == 0)
 		{
-			nr++;
+			v->info = (Reteta**)realloc(v->info, sizeof(Reteta*) * (++v->nrElem));
+			v->info[v->nrElem-1] = creareRetetaNoua(temp->info);
 		}
 		temp = temp->next;
-	}
-	if (nr != 0)
-	{
-		temp = cap;
-		v->nrElem = nr;
-		unsigned char aux = nr;
-		v->info = (Reteta**)malloc(sizeof(Reteta*) * nr);
-		while (temp)
-		{
-			if (strcmp(temp->info->numeMedic, denumire) == 0)
-			{
-				v->info[nr - aux] = creareRetetaNoua(temp->info);
-				aux--;
-			}
-			temp = temp->next;
-		}
-	}
-	else
-	{
-		v->nrElem = 0;
-		v->info = NULL;
 	}
 }
 
@@ -316,16 +297,16 @@ void main()
 	if (v.nrElem != 0)
 	{
 		printf("\n%s a fost gasit in lista si s-a format urmatorul vector:\n", numeMedic);
+		afisareVector(v);
+		totalCompensat(v);
+		dezalocareVector(&v);
 	}
 	else
 	{
 		printf("\nMedicul %s n-a fost gasit in lista!", numeMedic);
 	}
-	afisareVector(v);
-	totalCompensat(v);
 	printf("\n");
 	totalCantitate(cap, numeMedicament);
 	dezalocareLista(&cap);
-	dezalocareVector(&v);
 	_CrtDumpMemoryLeaks();
 }

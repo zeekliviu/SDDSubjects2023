@@ -194,17 +194,6 @@ void List2Arb(nodLS* cap, nodArb** rad)
 	}
 }
 
-void nrNoduri(nodArb* rad, unsigned char* nr, const float salariu)
-{
-	if (rad)
-	{
-		nrNoduri(rad->st, nr, salariu);
-		if (rad->info.salariu < salariu)
-			(*nr)++;
-		nrNoduri(rad->dr, nr, salariu);
-	}
-}
-
 Angajat DeepCopy(Angajat a)
 {
 	Angajat nou = a;
@@ -213,24 +202,17 @@ Angajat DeepCopy(Angajat a)
 	return nou;
 }
 
-void populareVector(nodArb* rad, Vector v, unsigned char* aux, const float salariu)
+void populareVector(nodArb* rad, Vector* v, const float salariu)
 {
 	if (rad)
 	{
-		populareVector(rad->st, v, aux, salariu);
-		if (rad->info.salariu < salariu)
-			v.vect[v.nrElem - (*aux)--] = DeepCopy(rad->info);
-		populareVector(rad->dr, v, aux, salariu);
+		populareVector(rad->st, v, salariu);
+		if (rad->info.salariu < salariu) {
+			v->vect = (Angajat*)realloc(v->vect, sizeof(Angajat) * (++v->nrElem));
+			v->vect[v->nrElem-1] = DeepCopy(rad->info);
+		}
+		populareVector(rad->dr, v, salariu);
 	}
-}
-
-void Arb2Vector(nodArb* rad, Vector* v, const float salariuPrag)
-{
-	v->nrElem = 0;
-	nrNoduri(rad, &v->nrElem, salariuPrag);
-	v->vect = (Angajat*)malloc(sizeof(Angajat) * v->nrElem);
-	unsigned char aux = v->nrElem;
-	populareVector(rad, *v, &aux, salariuPrag);
 }
 
 void traversareVector(Vector v)
@@ -280,6 +262,8 @@ void main()
 	nodLS* coada;
 	nodArb* rad = NULL;
 	Vector v;
+	v.nrElem = 0;
+	v.vect = NULL;
 	const unsigned char numeFisier[] = "date.txt";
 	const float pragSalariu = 2500.0f;
 	const float pragSalariuNou = 2300.0f;
@@ -298,7 +282,7 @@ void main()
 	List2Arb(cap, &rad);
 	inordine(rad);
 	printf("\n\n\n\n\n");
-	Arb2Vector(rad, &v, pragSalariuNou);
+	populareVector(rad, &v, pragSalariuNou);
 	traversareVector(v);
 	dezalocareArb(&rad);
 	dezalocareLista(&cap);
