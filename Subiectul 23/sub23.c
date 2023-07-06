@@ -304,6 +304,7 @@ void Arb2Vect(nodArb* rad, Vector1* v, nodArb* prev)
 {
     if (rad)
     {
+        Arb2Vect(rad->st, v, rad);
         if (rad->st == NULL && rad->dr == NULL)
         {
             v->vect = (Localitate*)realloc(v->vect, sizeof(Localitate) * (++v->nrElem));
@@ -312,7 +313,7 @@ void Arb2Vect(nodArb* rad, Vector1* v, nodArb* prev)
                 if (rad == prev->st) {
                     prev->st = NULL;
                 }
-                else if (rad == prev->dr) {
+                if (rad == prev->dr) {
                     prev->dr = NULL;
                 }
             }
@@ -321,7 +322,6 @@ void Arb2Vect(nodArb* rad, Vector1* v, nodArb* prev)
             free(rad);
             return;
         }
-        Arb2Vect(rad->st, v, rad);
         Arb2Vect(rad->dr, v, rad);
     }
 }

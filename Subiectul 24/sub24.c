@@ -2,15 +2,13 @@
 #include <malloc.h>
 #include <string.h>
 #include <crtdbg.h>
-#pragma warning(disable:4996)
+#pragma warning(disable : 4996)
 #define LINE_SIZE 128
 #define _CRTDBG_MAP_ALLOC
 
 typedef struct Data Data;
 typedef struct InfoTask Task;
 typedef struct ArboreBinar nodArb;
-typedef struct ListaDubla nodLS;
-typedef struct Vector Vector;
 
 struct Data
 {
@@ -35,18 +33,6 @@ struct ArboreBinar
     Task info;
     nodArb* st, * dr;
     char BF;
-};
-
-struct ListaDubla
-{
-    Task info;
-    nodLS* next, * prev;
-};
-
-struct Vector
-{
-    Task* vect;
-    unsigned char nrElem;
 };
 
 nodArb* creareNod(Task t, nodArb* st, nodArb* dr)
@@ -84,8 +70,8 @@ void rotatie_dreapta(nodArb** rad)
 {
     printf("\n\nRotatie dreapta la %f\n\n", (*rad)->info.timpEstimat);
     nodArb* aux = (*rad)->st;
-    (*rad)->st = (*rad)->st->dr;
-    (*rad)->st->dr = *rad;
+    (*rad)->st = aux->dr;
+    aux->dr = *rad;
     *rad = aux;
     calculBF(*rad);
 }
@@ -94,8 +80,8 @@ void rotatie_stanga(nodArb** rad)
 {
     printf("\n\nRotatie stanga la %f\n\n", (*rad)->info.timpEstimat);
     nodArb* aux = (*rad)->dr;
-    (*rad)->dr = (*rad)->dr->st;
-    (*rad)->dr->st = *rad;
+    (*rad)->dr = aux->st;
+    aux->st = *rad;
     *rad = aux;
     calculBF(*rad);
 }
@@ -116,10 +102,11 @@ void rotatie_stanga_dreapta(nodArb** rad)
 
 void reechilibrare(nodArb** rad)
 {
-    if (!(*rad)) return;
+    if (!(*rad))
+        return;
 
     calculBF(*rad);
-    if ((*rad)->BF == -2)  // left heavy
+    if ((*rad)->BF == -2) // left heavy
     {
         if ((*rad)->st->BF <= 0) // left child is left heavy or balanced
             rotatie_dreapta(rad);
@@ -166,9 +153,9 @@ void inserareArb(nodArb** rad, Task t)
             inserareArb(&(*rad)->st, t);
         reechilibrare(rad);
     }
-    else *rad = creareNod(t, NULL, NULL);
+    else
+        *rad = creareNod(t, NULL, NULL);
 }
-
 
 void inordine(nodArb* rad)
 {
@@ -210,6 +197,150 @@ void citireFisier(nodArb** rad, const char* numeFisier)
     fclose(f);
 }
 
+void spargeArb(nodArb* r, nodArb** s, unsigned t, nodArb* prev)
+{
+    if (!r)
+        return;
+    if ((r)->info.idTask == t)
+    {
+        *s = r;
+        if (prev)
+        {
+            if (prev->st == r)
+            {
+                prev->st = NULL;
+            }
+            else
+            {
+                prev->dr = NULL;
+            }
+        }
+        reechilibrare(s);
+        return;
+    }
+    spargeArb((r)->st, s, t, (r));
+    spargeArb((r)->dr, s, t, (r));
+}
+
+typedef struct NodeLD
+{
+    Task info;
+    struct NodeLD* prev, * next;
+} NodeLD;
+
+NodeLD* createNodeLD(Task t)
+{
+    NodeLD* n = (NodeLD*)malloc(sizeof(NodeLD));
+    if (n)
+    {
+        n->info = t;
+        n->prev = n->next = NULL;
+    }
+    return n;
+}
+
+void insertListD(NodeLD** h, NodeLD* n)
+{
+    if (!*h)
+    {
+        *h = n;
+        return;
+    }
+    NodeLD* aux = *h;
+    while (aux->next)
+    {
+        aux = aux->next;
+    }
+    n->prev = aux;
+    aux->next = n;
+}
+
+Task deepClone(Task s)
+{
+    Task t;
+    t.idTask = s.idTask;
+    t.numeTask = strdup(s.numeTask);
+    t.responsabilTask = strdup(s.responsabilTask);
+    t.descriereTask = strdup(s.descriereTask);
+    t.dataFinalizare = s.dataFinalizare;
+    t.dataStart = s.dataStart;
+    t.timpEstimat = s.timpEstimat;
+    return t;
+}
+
+void convertBSTLD(nodArb* r, NodeLD** h)
+{
+    if (!r)
+        return;
+    convertBSTLD(r->st, h);
+    insertListD(h, createNodeLD(deepClone(r->info)));
+    convertBSTLD(r->dr, h);
+}
+
+void printList(NodeLD* h)
+{
+    if (!h)
+        return;
+    printf("Timp estimat: %.2f\nID Task: %u\nNume task: %s\nDescriere task: %s\nResponsabil task: %s\nData start: %hhu/%hhu/%hu\nData stop: %hhu/%hhu/%hu\n\n", h->info.timpEstimat, h->info.idTask, h->info.numeTask, h->info.descriereTask, h->info.responsabilTask, h->info.dataStart.zi, h->info.dataStart.luna, h->info.dataStart.an, h->info.dataFinalizare.zi, h->info.dataFinalizare.luna, h->info.dataFinalizare.an);
+    printList(h->next);
+}
+
+typedef struct Vector
+{
+    Task* el;
+    int length;
+} Vector;
+
+void insertVector(Vector* v, Task t) {
+    (*v).el = (Task*)realloc((*v).el, sizeof(Task) * ((*v).length + 1));
+    (*v).el[(*v).length++] = t;
+}
+
+void convertLDV(NodeLD* h, Vector* v, float t) {
+    while (h)
+    {
+        if (h->info.timpEstimat > t) {
+            insertVector(v, h->info);
+        }
+        h = h->next;
+    }
+
+}
+
+void printVector(Vector v) {
+    for (int i = 0; i < v.length; i++)
+    {
+        printf("Timp estimat: %.2f\nID Task: %u\nNume task: %s\nDescriere task: %s\nResponsabil task: %s\nData start: %hhu/%hhu/%hu\nData stop: %hhu/%hhu/%hu\n\n", v.el[i].timpEstimat, v.el[i].idTask, v.el[i].numeTask, v.el[i].descriereTask, v.el[i].responsabilTask, v.el[i].dataStart.zi, v.el[i].dataStart.luna, v.el[i].dataStart.an, v.el[i].dataFinalizare.zi, v.el[i].dataFinalizare.luna, v.el[i].dataFinalizare.an);
+    }
+}
+
+void deallocateTree(nodArb** r) {
+    if (!*r) return;
+    deallocateTree(&((*r)->st));
+    deallocateTree(&((*r)->dr));
+    free((*r)->info.descriereTask);
+    free((*r)->info.numeTask);
+    free((*r)->info.responsabilTask);
+    free(*r);
+    *r = NULL;
+}
+
+void deallocateLD(NodeLD** h) {
+    if (!*h) return;
+    deallocateLD(&((*h)->next));
+    free((*h)->info.descriereTask);
+    free((*h)->info.numeTask);
+    free((*h)->info.responsabilTask);
+    free((*h));
+    *h = NULL;
+}
+
+void deallocateVector(Vector* v) {
+    free(v->el);
+    v->el = NULL;
+    v->length = 0;
+}
+
 void main()
 {
     nodArb* rad;
@@ -218,5 +349,24 @@ void main()
     inordine(rad);
     printf("\n\n");
     traversareNiveluri(rad);
+    nodArb* s = NULL;
+    spargeArb(rad, &s, 4, NULL);
+    printf("l-am spart?\n");
+    reechilibrare(&rad);
+    inordine(rad);
+    printf("arbore secundar\n");
+    inordine(s);
+    NodeLD* h = NULL;
+    convertBSTLD(s, &h);
+    printf("Lista dubla\n");
+    printList(h);
+    Vector v = { NULL, 0 };
+    convertLDV(h, &v, 40);
+    printf("Vectorul \n\n");
+    printVector(v);
+    deallocateTree(&rad);
+    deallocateTree(&s);
+    deallocateLD(&h);
+    deallocateVector(&v);
     _CrtDumpMemoryLeaks();
 }
